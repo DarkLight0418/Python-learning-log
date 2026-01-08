@@ -1,5 +1,5 @@
-.pyc
-.toc
-.pyz
-.spec
-.pkg
+*.pyc
+*.toc
+*.pyz
+*.spec
+*.pkg
