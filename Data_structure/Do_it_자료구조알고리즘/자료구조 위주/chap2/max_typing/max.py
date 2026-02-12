@@ -9,7 +9,7 @@ def max_of(a:Sequence) -> Any:
     for i in range(len(a)):
         if a[i] > maximum:
             maximum = a[i]
-        return maximum
+    return maximum
 
 if __name__ == '__main__':
     print('배열의 최댓값을 구합니다.')
