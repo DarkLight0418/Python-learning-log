@@ -4,3 +4,5 @@
 *.spec
 *.pkg
 *.html
+
+!/Crawling_Test/01_html_CSS/01_HTML_BASIC.html
