@@ -4,7 +4,8 @@
 """
 
 class EmptyStackError(Exception):
-  pass
+  def __init__(self, message="스택이 비어있습니다."):
+    super().__init__(message)
 
 class Stack:
   def __init__(self):
