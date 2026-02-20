@@ -1,3 +1,8 @@
+"""
+스택 클래스, 예외 코드
+2026.02.21 최초 작성
+"""
+
 class EmptyStackError(Exception):
   pass
 
