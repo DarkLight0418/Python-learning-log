@@ -1,0 +1,17 @@
+README.md
+pyproject.toml
+src/vds/__init__.py
+src/vds.egg-info/PKG-INFO
+src/vds.egg-info/SOURCES.txt
+src/vds.egg-info/dependency_links.txt
+src/vds.egg-info/top_level.txt
+src/vds/app/__init__.py
+src/vds/app/controller.py
+src/vds/app/main.py
+src/vds/core/__init__.py
+src/vds/core/stack.py
+src/vds/presenter/__init__.py
+src/vds/usecases/__init__.py
+src/vds/utils/__init__.py
+src/vds/view/__init__.py
+tests/test_stack.py
