@@ -16,7 +16,7 @@ def test_push_pop():
   
   assert s.pop() == 20
   assert s.pop() == 10
-  
+
 def test_empty_pop():
   s = Stack()
   with pytest.raises(EmptyStackError):
