@@ -10,7 +10,6 @@ from typing import Literal, Optional, Union, List, Dict, Tuple  # typing(타입 
 
 
 ''' 기본 그림 구조 벡터 클래스(Basic geometry) '''
-
 @dataclass(frozen=True)
 class Vec2:
   x: float
@@ -69,3 +68,23 @@ class ArrowItem:
   
 Drawable = Union[RectItem, TextItem, ArrowItem]
 
+''' 하나의 scene 처리(presenter output - one frame) '''
+@dataclass(frozen=True)
+class SceneMeta:
+  title: str = ""
+  complexity: str = ""   # e.g. "push: O(1), pop: O(1)"
+  notes: str = ""   # 설명 텍스트
+  
+@dataclass(frozen=True)
+class Scene:
+  meta: SceneMeta = SceneMeta()
+  width: int = 800
+  height: int = 600
+  items: Tuple[Drawable, ...] = field(default_factory=tuple)
+  
+  def sorted_items(self) -> Tuple[Drawable, ...]:
+    return tuple(sorted(self.items, key=lambda it:getattr(it, "z", 0)))
+  
+  def key_index(self) -> Dict[str, Drawable]:
+    # 애니메이션 / diff용: key -> item
+    return {getattr(it, "key"): it for it in self.items}
