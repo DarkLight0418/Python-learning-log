@@ -77,10 +77,10 @@ class SceneMeta:
   
 @dataclass(frozen=True)
 class Scene:
-  meta: SceneMeta = SceneMeta()
+  meta: SceneMeta = SceneMeta()   # UI 상단에 표시할 정보(메타 데이터)
   width: int = 800
   height: int = 600
-  items: Tuple[Drawable, ...] = field(default_factory=tuple)
+  items: Tuple[Drawable, ...] = field(default_factory=tuple)  # 도형 목록(불변 컬렉션 처리)
   
   def sorted_items(self) -> Tuple[Drawable, ...]:
     return tuple(sorted(self.items, key=lambda it:getattr(it, "z", 0)))
