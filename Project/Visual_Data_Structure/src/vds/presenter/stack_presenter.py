@@ -72,6 +72,19 @@ class StackPresenter:
             )
       )
       
+      cx = geom.pos.x + geom.size.x / 2.0
+      cy = geom.pos.y + geom.size.y / 2.0
+      items.append(
+          TextItem(
+              key=f"stack:item:{i}:text",
+              pos=Vec2(cx, cy),
+              text=str(v),
+              style=Style(role="stack_item_text"),
+              align="center",
+              z=20 + i,
+          )
+      )
+      
     # --- TOP 포인터(라벨 + 화살표) ---
     items.append(
         TextItem(
