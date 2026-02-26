@@ -78,3 +78,27 @@ class TkCanvasView:
 
   def set_theme(self, role: str, theme: RoleTheme) -> None:
     self._themes[role] = theme
+
+  # ----------------------------
+  # Internal
+  # ----------------------------
+  def _apply_scene_size(self, scene: Scene) -> None:
+    # Canvas 크기를 Scene에 맞추고 싶으면 활성화
+    self.canvas.config(width=scene.width, height=scene.height)
+    
+  def _draw_scene(self, scene: Scene) -> None:
+    for drawable in scene.sorted_items():
+      if isinstance(drawable, RectItem):
+        item_id = self._draw_rect(drawable)
+      elif isinstance(drawable, TextItem):
+        item_id = self._draw_text(drawable)
+      elif isinstance(drawable, ArrowItem):
+        item_id = self._draw_arrow(drawable)
+      else:
+        continue
+      
+      self._item_ids_by_key[getattr(drawable, "key")] = item_id
+      
+  # ----------------------------
+  # Drawing primitives
+  # ----------------------------
