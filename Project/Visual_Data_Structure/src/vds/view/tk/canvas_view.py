@@ -3,7 +3,7 @@ Tkinter Canvas View
 - Presenter가 만든 Scene/Drawable을 Tkinter Canvas에 렌더링함.
 - 자료구조 종류(스택/큐/리스트/힙)는 전혀 모름. Scene만 알고 있으니 참고.
 
-2026.02.25 작성
+2026.02.25 최초 작성
 """
 
 from __future__ import annotations
@@ -102,3 +102,79 @@ class TkCanvasView:
   # ----------------------------
   # Drawing primitives
   # ----------------------------
+  def _resolve_colors(self, style: Style) -> Tuple[str, str, str]:
+    """
+    (fill, outline, text) 결정 규칙:
+    1) Style에 명시된 값 우선
+    2) 없으면 role 테마 기본값 사용
+    3) role도 없으면 default 사용
+    """
+    
+    theme = self._themes.get(style.role) or self._themes["default"]
+    
+    fill = style.fill if style.fill is not None else theme.rect_fill
+    outline = style.outline if style.outline is not None else theme.rect_outline
+    text = style.text if style.text is not None else theme.text_color
+    
+    return fill, outline, text
+  
+  def _dash_pattern(self, style: Style) -> Optional[Tuple[int, int]]:
+    if style.stroke.dashed:
+      return (6, 4)
+    return None
+  
+  def _draw_rect(self, it: RectItem) -> int:
+    fill, outline, _ = self._resolve_colors(it.style)
+    dash = self._dash_pattern(it.style)
+    
+    x1 = it.geom.pos.x
+    y1 = it.geom.pos.y
+    x2 = it.geom.pos.x + it.geom.size.x
+    y2 = it.geom.pos.y + it.geom.size.y
+    
+    return self.canvas.create_rectangle(
+      x1, y1, x2, y2,
+      fill=fill,
+      outline=outline,
+      width=it.style.stroke.width,
+      dash=dash
+    )
+
+  def _draw_text(self, it: TextItem) -> int:
+    _, _, text_color = self._resolve_colors(it.style)
+    
+    # Tkinter anchor 매핑
+    if it.align == "left":
+      anchor = "w"
+    elif it.align =="right":
+      anchor ="e"
+    else:
+      anchor = "center"
+      
+    return self.canvas.create_text(
+      it.pos.x, it.pos.y,
+      text=it.text,
+      fill=text_color,
+      anchor=anchor
+    )
+    
+  def _draw_arrow(self, it: ArrowItem) -> int:
+    fill, outline, _ = self._resolve_colors(it.style)
+    dash = self._dash_pattern(it.style)
+
+    # Tkinter line color는 fill 옵션이 핵심(outline 개념이 없음)
+    line_color = outline if outline else fill
+
+    # arrowshape ==> (head_length, head_width, neck_width)
+    
+    hs = max(1.0, float(it.head_size))
+    arrowshape = (hs, hs, max(1.0, hs * 0.35))
+
+    return self.canvas.create_line(
+        it.start.x, it.start.y, it.end.x, it.end.y,
+        fill=line_color,
+        width=it.style.stroke.width,
+        dash=dash,
+        arrow=tk.LAST,
+        arrowshape=arrowshape
+    )
