@@ -1,6 +1,6 @@
 '''
 Stack Presenter: Stack 상태(list) -> Scene(Drawable)
-2026.02.23 작성
+2026.02.23 최초 작성
 '''
 
 from __future__ import annotations

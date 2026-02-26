@@ -2,6 +2,7 @@
 Tkinter Canvas View
 - Presenter가 만든 Scene/Drawable을 Tkinter Canvas에 렌더링함.
 - 자료구조 종류(스택/큐/리스트/힙)는 전혀 모름. Scene만 알고 있으니 참고.
+-> 나중에 Presenter가 Scene을 만들어주는 구조
 
 2026.02.25 최초 작성
 """
