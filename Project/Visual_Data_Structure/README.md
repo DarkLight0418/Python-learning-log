@@ -26,7 +26,15 @@ Python 활용 능력 향상을 위해 작성
 ## 규칙
 
 ### 데이터 흐름 (만들 때마다 참고..)
+
+**'MVP 구조'를 인식하고 작업할 것**
+
+```
+사용자 ↔ View ↔ Presenter ↔ Model
+```
+```
 User Input(View) → Presenter → UseCase → StepSequence → Presenter(compile) → Scene → (Animation) → View(render)
+```
 
 * * *
 업데이트 2026.02.28.
