@@ -1,11 +1,10 @@
+
+from vds.core.errors import EmptyStackError
+
 """
 스택 클래스, 예외 코드
 2026.02.21 최초 작성
 """
-
-class EmptyStackError(Exception):
-  def __init__(self, message="스택이 비어있습니다."):
-    super().__init__(message)
 
 class Stack:
   def __init__(self):
