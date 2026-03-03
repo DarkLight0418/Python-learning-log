@@ -36,5 +36,9 @@ Python 활용 능력 향상을 위해 작성
 User Input(View) → Presenter → UseCase → StepSequence → Presenter(compile) → Scene → (Animation) → View(render)
 ```
 
+## 요구사항 명세
+(별도 md 작성 예정)
+
+
 * * *
-업데이트 2026.02.28.
+업데이트 2026.03.02.

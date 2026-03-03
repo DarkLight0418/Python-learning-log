@@ -21,6 +21,15 @@ class StackPresenter:
     self._spec = spec or StackLayoutSpec()
     
   def present_from_values(self, values: list[object]) -> Scene:
+    """_summary_
+
+    Args:
+        values (list[object]): _description_
+
+    Returns:
+        Scene(장면): _description(설명)_
+    """
+    
     
     layout = compute_stack_layout(n_items=len(values), spec=self._spec)
     
