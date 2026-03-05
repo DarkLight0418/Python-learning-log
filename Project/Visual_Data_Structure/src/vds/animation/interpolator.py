@@ -6,6 +6,8 @@
   - 등장(enter)은 즉시 표시
   - 퇴장(exit)은 즉시 제거 (prev-only는 mid에 포함하지 않음)
   - 보간 불가(타입 다름/핸들러 없음) => next 아이템으로 대체
+  
+2026.03.04. 최초 작성
 '''
 from __future__ import annotations
 
@@ -82,3 +84,44 @@ class InterpRegistry:
 
   def get(self, ta: Type[Drawable], tb: Type[Drawable]) -> Optional[InterpFn]:
       return self._handlers.get((ta, tb))
+    
+REGISTRY = InterpRegistry()
+
+def _interp_rect(a: Drawable, b: Drawable, t:float, policy: InterpPolicy) -> Drawable:
+  assert isinstance(a, RectItem) and isinstance(b, RectItem)
+  return RectItem(
+    key=a.key,
+    geom=lerp_rectgeom(a.geom, b.geom, t, interpolate_size=policy.interpolate_size),
+    style=b.style,
+    z=b.z,
+  )
+  
+def _interp_text(a: Drawable, b: Drawable, t: float, policy: InterpPolicy) -> Drawable:
+  assert isinstance(a, TextItem) and isinstance(b, TextItem)
+  return TextItem(
+      key=a.key,
+      pos=lerp_vec2(a.pos, b.pos, t),
+      text=b.text,      # MVP: text는 next 기준
+      style=b.style,
+      align=b.align,
+      z=b.z,
+  )
+  
+def _interp_arrow(a: Drawable, b: Drawable, t: float, policy: InterpPolicy) -> Drawable:
+  assert isinstance(a, ArrowItem) and isinstance(b, ArrowItem)
+  return ArrowItem(
+      key=a.key,
+      start=lerp_vec2(a.start, b.start, t),
+      end=lerp_vec2(a.end, b.end, t),
+      style=b.style,
+      head_size=b.head_size,
+      z=b.z,
+  )
+  
+REGISTRY.register(RectItem, RectItem, _interp_rect)
+REGISTRY.register(TextItem, TextItem, _interp_text)
+REGISTRY.register(ArrowItem, ArrowItem, _interp_arrow)
+
+# ------------------------------------------------------------
+# Public API
+# ------------------------------------------------------------
