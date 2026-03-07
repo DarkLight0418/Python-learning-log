@@ -4,7 +4,7 @@ Stack Presenter: Stack 상태(list) -> Scene(Drawable)
 '''
 
 from __future__ import annotations
-from vds.presenter.scene_models import (
+from vds.utils.scene_models import (
   Vec2,
   RectItem,
   TextItem,

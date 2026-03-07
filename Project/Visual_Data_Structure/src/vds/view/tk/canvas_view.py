@@ -13,7 +13,7 @@ import tkinter as tk
 from dataclasses import dataclass
 from typing import Dict, Optional, Tuple
 
-from vds.presenter.scene_models import (
+from vds.utils.scene_models import (
     Scene,
     RectItem,
     TextItem,

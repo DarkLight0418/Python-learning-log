@@ -5,7 +5,7 @@
 
 from __future__ import annotations
 from dataclasses import dataclass
-from vds.presenter.scene_models import Vec2, RectGeom
+from vds.utils.scene_models import Vec2, RectGeom
 
 @dataclass(frozen=True)
 class StackLayoutSpec:
