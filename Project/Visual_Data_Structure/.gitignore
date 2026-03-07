@@ -5,6 +5,11 @@ __pycache__/
 *.pyd
 *.so
 
+# Python build artifacts
+*.egg-info/
+build/
+dist/
+
 # Virtual Environment
 venv/
 .env/
@@ -36,5 +41,3 @@ desktop.ini
 *.spec
 *.pkg
 *.html
-
-.src/vds.egg-info/
