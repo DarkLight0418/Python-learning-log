@@ -36,3 +36,5 @@ desktop.ini
 *.spec
 *.pkg
 *.html
+
+.src/vds.egg-info/
