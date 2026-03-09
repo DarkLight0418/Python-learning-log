@@ -8,12 +8,12 @@ Tkinter Canvas View
 """
 
 from __future__ import annotations
-
 import tkinter as tk
 from dataclasses import dataclass
 from typing import Dict, Optional, Tuple
 
-from vds.utils.scene_models import (
+from theme import RoleTheme
+from Project.Visual_Data_Structure.src.vds.scene.scene_models import (
     Scene,
     RectItem,
     TextItem,
@@ -21,17 +21,7 @@ from vds.utils.scene_models import (
     Style,
 )
 
-@dataclass(frozen=True)
-class RoleTheme:
-  """
-  role -> (fill, outline, text) 기본 매핑
-    - Style.fill/outline/text가 명시되어 있으면 그 값을 우선하도록 처리.
-    - 없으면 role 기반으로 여기 기본값을 사용.
-  """
-  rect_fill: str = ""
-  rect_outline: str = "black"
-  text_color: str = "black" 
-  
+
 class TkCanvasView:
   """
   Scene을 통째로 clear -> redraw 하는 단순 렌더링 버전(MVP).
