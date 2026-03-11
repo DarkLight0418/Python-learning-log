@@ -37,8 +37,30 @@ User Input(View) → Presenter → UseCase → StepSequence → Presenter(compil
 ```
 
 ## 요구사항 명세
-(별도 md 작성 예정)
+(별도 md 작성중)
+docs/requirement.md 참고
+
+
+## 시스템 구상
+
+### 순서
+```
+사용자 연산 입력
+→ 자료구조 상태 변화
+→ 변화 과정을 단계(step)로 분해
+→ 각 단계를 scene으로 변환
+→ 다음 버튼으로 step을 전진
+→ 필요하면 그 step 안에서 짧은 애니메이션 재생
+```
+
+### 구조
+```
+Usecase → StepSequence
+Presenter → StepSequence를 SceneSequence로 변환
+View → Scene 하나를 렌더
+Controller → 다음/이전 step 이동
+```
 
 
 * * *
-업데이트 2026.03.02.
+업데이트 2026.03.11.
