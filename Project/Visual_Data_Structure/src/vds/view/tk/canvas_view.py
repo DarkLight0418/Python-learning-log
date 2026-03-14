@@ -13,7 +13,7 @@ from dataclasses import dataclass
 from typing import Dict, Optional, Tuple
 
 from theme import RoleTheme
-from Project.Visual_Data_Structure.src.vds.scene.scene_models import (
+from vds.presenter.scene_models import (
     Scene,
     RectItem,
     TextItem,
