@@ -1,9 +1,17 @@
 ### Mini Project - Visual Data Structure
 
+# 프로젝트 개요
+
+## 구현 요구사항
+
+Visual Data Structure(VDS)는 자료구조의 상태 변화와 연산 결과를 **장면(Scene) 프레임** 단위로 시각화하는 학습용 도구로서, 이 시스템은 GUI 사용자와 테스트 시뮬레이터를 지원하며, 각 연산의 결과를 일관된 Scene 형식으로 생성해야 함.
+
 ## 소개
+
 Python으로 간단히 자료구조들을 애니메이션으로 보여주는 프로그램
 
 ## 목적
+
 Python 활용 능력 향상을 위해 작성
 
 
@@ -37,6 +45,7 @@ User Input(View) → Presenter → UseCase → StepSequence → Presenter(compil
 ```
 
 ## 요구사항 명세
+
 (별도 md 작성중)
 docs/requirement.md 참고
 
@@ -44,6 +53,7 @@ docs/requirement.md 참고
 ## 시스템 구상
 
 ### 순서
+
 ```
 사용자 연산 입력
 → 자료구조 상태 변화
@@ -54,6 +64,7 @@ docs/requirement.md 참고
 ```
 
 ### 구조
+
 ```
 Usecase → StepSequence
 Presenter → StepSequence를 SceneSequence로 변환

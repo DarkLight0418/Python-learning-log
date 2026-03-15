@@ -7,33 +7,28 @@
 
 ## 2. 추천 디렉토리 구조(초안)
 
-```text
-vds/
-  app/
-    controller.py
-    runner.py
-
-  core/
-    stack.py
-    errors.py
-
-  presenter/
-    models.py
-    stack_presenter.py
-    scene_builder.py
-
-  animation/
-    interpolator.py
-    animator.py
-
-  view/
-    tk_canvas_view.py
-    draw_registry.py
-
-  tests/
-    test_stack.py
-    test_stack_presenter.py
-    test_scene_builder.py
+```
+└── vds/
+    ├── app/
+    │   ├── controller.py
+    │   └── runner.py
+    ├── core/
+    │   ├── stack.py
+    │   └── errors.py
+    ├── presenter/
+    │   ├── models.py
+    │   ├── stack_presenter.py
+    │   └── scene_builder.py
+    ├── animation/
+    │   ├── interpolator.py
+    │   └── animator.py
+    ├── view/
+    │   ├── tk_canvas_view.py
+    │   └── draw_registry.py
+    └── tests/
+        ├── test_stack.py
+        ├── test_stack_presenter.py
+        └── test_scene_builder.py
 ```
 
 ---
