@@ -6,6 +6,9 @@ for i in range(3):
   game_item_name = input("아이템 입력하기 >> ")
   count = int(input("구매할 개수는? >> "))
   item[game_item_name] = count
+
+print("당신이 구매한 아이템은 다음과 같습니다.")
+print(item)  
   
 print("="*50)
 result = input("당신이 확인하고 싶은 아이템은 무엇입니까? >> ")
