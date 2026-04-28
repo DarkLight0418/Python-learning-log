@@ -44,7 +44,7 @@
 - EmptyStackError
 - 향후 DomainError, ValidationError 확장 가능
 
-### 3.3 presenter/models.py
+### 3.3 presenter/scene_models.py
 - Scene, SceneMeta, RectItem, TextItem, ArrowItem 등 정의
 - View가 사용하는 공통 출력 모델
 
@@ -56,7 +56,7 @@
 - Scene 조립 책임 분리
 - Presenter 비대화 방지 목적
 
-### 3.6 view/tk_canvas_view.py
+### 3.6 view/canvas_view.py
 - Tkinter Canvas 렌더링 담당
 - Scene만 받아 그림 생성
 
@@ -73,7 +73,7 @@
 ## 4. 현재 리팩토링 우선순위
 
 ### 우선순위 1
-- 도메인 예외를 `errors.py`로 분리
+- ~~도메인 예외를 `errors.py`로 분리~~
 - Stack 순수성 강화
 - Scene 출력 계약 점검
 
