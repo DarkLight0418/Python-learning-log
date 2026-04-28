@@ -1,5 +1,6 @@
-from dataclasses import dataclass
 from __future__ import annotations
+from dataclasses import dataclass
+
 
 '''
 색/폰트/간격 상수
