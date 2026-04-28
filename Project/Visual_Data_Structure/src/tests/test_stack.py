@@ -4,7 +4,8 @@
 """
 
 
-from src.vds.core.stack import Stack, EmptyStackError
+from vds.core.stack import Stack
+from vds.core.errors import EmptyStackError
 import pytest
 
 def test_push_pop():
