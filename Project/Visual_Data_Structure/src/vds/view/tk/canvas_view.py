@@ -12,7 +12,7 @@ import tkinter as tk
 from dataclasses import dataclass
 from typing import Dict, Optional, Tuple
 
-from theme import RoleTheme
+from vds.view.tk.theme import RoleTheme
 from vds.presenter.scene_models import (
     Scene,
     RectItem,
