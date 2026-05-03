@@ -27,8 +27,19 @@ def decode_message(line: str) -> dict[str, Any] | None:
   except json.JSONDecodeError:
     return None
   
-  if not isinstace(data, dict):
+  if not isinstance(data, dict):
     return None
   
   return data
 
+def extract_messages(buffer: str) -> tuple[list[dict[str, Any]], str]:
+  messages = list[dict[str, Any]] = []
+  while DELIMITER in buffer:
+    line, buffer = buffer.split(DELIMITER, 1)
+    
+    message = decode_message(line)
+    
+    if message is not None:
+      messages.append(message)
+      
+  return messages, buffer
