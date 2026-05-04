@@ -11,4 +11,27 @@ from dataclasses import dataclass
 
 from protocol import ENCODING, encode_message, extract_messages, make_message
 
-client = []
+HOST = "0.0.0.0"
+PORT = 5000
+RECV_SIZE = 4096
+
+@dataclass
+class ClientInfo:
+  socket: socket.socket
+  address: tuple[str, int]
+  nickname: str
+  
+class ChatServer:
+  def __init__(self, host: str = HOST, port: int = PORT) -> None:
+    self.host = host
+    self.port = port
+    
+    self.server_socket: socket.socket | None = None
+
+    # key: client socket, value: client information
+    self.clients: dict[socket.socket, ClientInfo] = {}
+    
+    # 여러 스레드가 clients에 접근하므로 Lock 사용
+    self.clients_lock = threading.Lock()
+    
+    self.running = False
