@@ -35,3 +35,21 @@ class ChatServer:
     self.clients_lock = threading.Lock()
     
     self.running = False
+    
+  def start(self) -> None:
+    """
+    서버를 시작하고 클라이언트 접속을 계속 기다립니다.
+    """
+  
+  
+  def handle_message(self, client_socket: socket.socket, message: dict) -> None:
+    """
+    _summary_
+
+    Args:
+        client_socket (socket.socket): _description_
+        message (dict): _description_
+    
+    클라이언트가 보낸 메시지 타입에 따라 처리합니다.
+
+    """
