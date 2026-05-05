@@ -33,7 +33,7 @@ def decode_message(line: str) -> dict[str, Any] | None:
   return data
 
 def extract_messages(buffer: str) -> tuple[list[dict[str, Any]], str]:
-  messages = list[dict[str, Any]] = []
+  messages: list[dict[str, Any]] = []
   while DELIMITER in buffer:
     line, buffer = buffer.split(DELIMITER, 1)
     
