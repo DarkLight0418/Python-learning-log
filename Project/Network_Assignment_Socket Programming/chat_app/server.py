@@ -120,4 +120,12 @@ class ChatServer:
       # 직접 브로드캐스트하지 않음, finally의 remove_client(()에서 퇴장 메시지 하나만 보내게 함
       self.remove_client(client_socket, notify_leave=True)
       
-      
+  def set_nickname(self, client_socket: socket.socket, nickname: str) -> None:
+    """ 
+    클라이언트 닉네임 저장
+    """
+    
+  def broadcast(self, message: dict[str, str]) -> None:
+    """
+    현재 접속 중인 모든 클라이언트에게 메시지 전송
+    """
