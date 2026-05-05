@@ -40,6 +40,44 @@ class ChatServer:
     """
     서버를 시작하고 클라이언트 접속을 계속 기다립니다.
     """
+    self.running = True
+    
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server_socket:
+      # 서버를 껐다 켰을 때 포트 재사용을 조금 더 쉽게 해줍니다.
+      server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+      
+      server_socket.bind((self.host, self.port))
+      server_socket.listen()
+      
+      self.server_socket = server_socket
+      
+      print(f"[SERVER] Listening on {self.host}:{self.port}")
+      
+      try:
+        while self.running:
+          client_socket, address = server_socket.accept()
+          
+          print(f"[SERVER] 연결됨: {address}")
+          
+          with self.clients_lock:
+            self.clients[client_socket] = ClientInfo(
+              socket=client_socket,
+              address=address,
+              nickname="",
+            )
+            
+          client_thread = threading.Thread(
+            target=self.handle_client,
+            args=(client_socket,),
+            daemon=True,
+          )
+          client_thread.start()
+          
+      except KeyboardInterrupt:
+        print("\n[SERVER] Ctrl+C 입력, 서버를 종료합니다.")
+      
+      finally:
+        self.stop()
   
   
   def handle_message(self, client_socket: socket.socket, message: dict) -> None:
