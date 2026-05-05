@@ -91,3 +91,33 @@ class ChatServer:
     클라이언트가 보낸 메시지 타입에 따라 처리합니다.
 
     """
+    
+    message_type = message.get("type")
+    sender = str(message.get("sender", "unknown"))
+    text = str(message.get("message", ""))
+    
+    if message_type == "join":
+      self.set_nickname(client_socket, sender)
+      
+      join_message = make_message(
+        "join",
+        sender,
+        f"{sender}님이 입장했습니다.",
+      )
+      self.broadcast(join_message)
+        
+        
+    elif message_type == "chat":
+      chat_message = make_message(
+        "chat",
+        sender,
+        text,
+      )
+      
+      self.broadcast(chat_message)
+      
+    elif message_type == "leave":
+      # 직접 브로드캐스트하지 않음, finally의 remove_client(()에서 퇴장 메시지 하나만 보내게 함
+      self.remove_client(client_socket, notify_leave=True)
+      
+      
