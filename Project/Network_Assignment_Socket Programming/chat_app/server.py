@@ -129,3 +129,23 @@ class ChatServer:
     """
     현재 접속 중인 모든 클라이언트에게 메시지 전송
     """
+    with self.clients_lock:
+      client_sockets = list(self.clients.keys())
+      
+    broken_clients: list[socket.socket] = []
+    
+    for client_socket in client_sockets:
+      try:
+        client_socket.sendall(encode_message(message))
+      except OSError:
+        broken_clients.append(client_socket)
+    
+    for broken_socket in broken_clients:
+      self.remove_client(broken_socket, notify_leave=True)
+      
+  def remove_client(self, client_socket: socket.socket, notify_leave: bool = True) -> None:
+    """
+    클라이언트 목록에서 제거하고 소켓을 닫습니다.
+    """
+    
+    
