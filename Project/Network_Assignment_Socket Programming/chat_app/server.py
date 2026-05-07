@@ -151,4 +151,27 @@ class ChatServer:
     클라이언트 목록에서 제거하고 소켓을 닫습니다.
     """
     
+    nickname = ""
     
+    with self.clients_lock:
+      info = self.clients.pop(client_socket, None)
+      
+      if info is not None:
+        nickname = info.nickname
+        
+    try:
+      client_socket.close()
+    except OSError:
+      pass
+    
+    if nickname:
+      print(f"[SERVER] 제거됨: {nickname}")
+      
+      if notify_leave:
+        leave_message = make_message(
+          "leave",
+          nickname,
+          f"{nickname}님이 퇴장했습니다.",
+        )
+        
+        self.broadcast(leave_message)
