@@ -124,6 +124,9 @@ class ChatServer:
     """ 
     클라이언트 닉네임 저장
     """
+    with self.clients_lock:
+      if client_socket in self.clients:
+        self.clients[client_socket].nickname = nickname
     
   def broadcast(self, message: dict[str, str]) -> None:
     """
