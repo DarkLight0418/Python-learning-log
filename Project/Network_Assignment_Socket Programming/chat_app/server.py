@@ -79,7 +79,6 @@ class ChatServer:
       finally:
         self.stop()
   
-  
   def handle_message(self, client_socket: socket.socket, message: dict) -> None:
     """
     _summary_
@@ -180,6 +179,26 @@ class ChatServer:
     """
     서버와 모든 클라이언트 소켓을 닫습니다.
     """
+    self.running = False
     
-  
+    with self.clients_lock:
+      client_sockets = list(self.clients.keys())
+      self.clients.clear()
+      
+    for client_socket in client_sockets:
+      try:
+        client_socket.close()
+      except OSError:
+        pass
+      
+    if self.server_socket is not None:
+      try:
+        self.server_socket.close()
+      except OSError:
+        pass
+      
+    print("[SERVER] 종료(멈춤)")
     
+if __name__ == "__main__":
+  server = ChatServer()
+  server.start()
