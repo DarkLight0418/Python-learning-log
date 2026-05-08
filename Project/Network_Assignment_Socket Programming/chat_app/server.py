@@ -79,6 +79,31 @@ class ChatServer:
       finally:
         self.stop()
   
+  def handle_client(self, client_socket: socket.socket) -> None:
+    """
+    특정 클라이언트로부터 메시지를 계속 수신합니다.
+    """
+    buffer = ""
+    
+    try:
+      while self.running:
+        data = client_socket.recv(RECV_SIZE)
+        
+        if not data:
+          break
+        buffer += data.decode(ENCODING)
+        
+        messages, buffer = extract_messages(buffer)
+        
+        for message in messages:
+          self.handle_message(client_socket, message)
+          
+    except OSError:
+      pass
+    
+    finally:
+      self.remove_client(client_socket, notify_leave=True)
+  
   def handle_message(self, client_socket: socket.socket, message: dict) -> None:
     """
     _summary_
