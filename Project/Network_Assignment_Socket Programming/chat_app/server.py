@@ -175,3 +175,11 @@ class ChatServer:
         )
         
         self.broadcast(leave_message)
+  
+  def stop(self) -> None:
+    """
+    서버와 모든 클라이언트 소켓을 닫습니다.
+    """
+    
+  
+    
