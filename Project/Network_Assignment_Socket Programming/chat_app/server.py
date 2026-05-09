@@ -49,13 +49,24 @@ class ChatServer:
       server_socket.bind((self.host, self.port))
       server_socket.listen()
       
+      # accept()가 영원히 막히지 않도록 timeout 설정
+      server_socket.settimeout(1.0)
+      
       self.server_socket = server_socket
       
-      print(f"[SERVER] Listening on {self.host}:{self.port}")
+      print(f"[SERVER] Listening on {self.host}:{self.port} / 서버 종료 Ctrl+C")
       
       try:
         while self.running:
-          client_socket, address = server_socket.accept()
+          '''
+          내부 try-catch
+          -> 1초마다 깨어나서 self.running 상태와 Ctrl+C 확인 
+          == accept() 무한정 대기 방지!!
+          '''
+          try:
+            client_socket, address = server_socket.accept()
+          except socket.timeout:
+            continue
           
           print(f"[SERVER] 연결됨: {address}")
           
