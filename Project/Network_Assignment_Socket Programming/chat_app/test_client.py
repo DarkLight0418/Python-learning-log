@@ -3,7 +3,7 @@ from __future__ import annotations
 import socket
 import threading
 
-from protocol import ENCODING, encode_message, extract_messages, make_message
+from protocol import ENCODING, TYPE_JOIN, TYPE_CHAT, TYPE_LEAVE, encode_message, extract_messages, make_message
 
 HOST = "127.0.0.1"
 PORT = 5000
@@ -29,11 +29,11 @@ def receive_loop(sock: socket.socket) -> None:
         sender = message.get("sender")
         text = message.get("message")
         
-        if msg_type == "join":
+        if msg_type == TYPE_JOIN:
           print(f"[입장] {text}")
-        elif msg_type == "leave":
+        elif msg_type == TYPE_LEAVE:
           print(f"[퇴장] {text}")
-        elif msg_type == "chat":
+        elif msg_type == TYPE_CHAT:
           print(f"{sender}: {text}")
         else:
           print("[UNKNOWN]", message)

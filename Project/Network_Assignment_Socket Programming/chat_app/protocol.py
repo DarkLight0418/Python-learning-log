@@ -5,6 +5,12 @@ from typing import Any
 ENCODING = "utf-8"
 DELIMITER = "\n"
 
+# 문자열 처리 -> 상수화
+TYPE_JOIN = "join"
+TYPE_CHAT = "chat"
+TYPE_LEAVE = "leave"
+
+
 def make_message(message_type: str, sender: str, message: str) -> dict[str, str]:
   return {
     "type" : message_type,
