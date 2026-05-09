@@ -1,5 +1,4 @@
 from __future__ import annotations
-import dataclasses
 import json
 from typing import Any
 
@@ -7,7 +6,9 @@ ENCODING = "utf-8"
 DELIMITER = "\n"
 
 # 문자열 처리 -> 상수화
-@dataclasses
+
+# 2026-05-09 수정: @dataclasses 모듈 써서 하는 건줄 알았는데
+# 일반 클래스 상수로도 되는구나...
 class Type:
   TYPE_JOIN = "join"
   TYPE_CHAT = "chat"
