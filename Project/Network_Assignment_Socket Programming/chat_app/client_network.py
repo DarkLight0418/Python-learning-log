@@ -12,3 +12,14 @@ client_network.py
 - 서버와의 연결, 송신, 수신만 담당합니다.
 - 수신한 메시지는 Queue에 넣습니다.
 """
+from __future__ import annotations
+
+import queue
+import socket
+import threading
+from typing import Any
+
+from protocol import ENCODING, Type, encode_message, extract_messages, make_message
+
+RECV_SIZE = 4096
+
