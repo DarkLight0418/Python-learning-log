@@ -1,4 +1,4 @@
-from protocol import make_message, encode_message, extract_messages
+from chat_app.protocol import make_message, encode_message, extract_messages
 
 msg = make_message("chat", "hanjae", "안녕하세요")
 data = encode_message(msg)

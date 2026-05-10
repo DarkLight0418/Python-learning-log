@@ -3,7 +3,7 @@ from __future__ import annotations
 import socket
 import threading
 
-from protocol import ENCODING, Type, encode_message, extract_messages, make_message
+from chat_app.protocol import ENCODING, Type, encode_message, extract_messages, make_message
 
 HOST = "127.0.0.1"
 PORT = 5000
