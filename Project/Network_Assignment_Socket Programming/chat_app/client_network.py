@@ -35,4 +35,42 @@ class ChatClientNetwork:
     
     self.receive_thread: threading.Thread | None = None
     
+  @property
+  def is_connected(self) -> bool:
+    return self.sock is not None and self.running.is_set()
   
+  def connect(self, host: str, port: int, nickname: str) -> None:
+    """
+    서버 접속 후 수신 스레드 시작
+    """
+    
+    if self.is_connected:
+      return
+    
+    self.nickname = nickname
+    
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    
+    # recv에서 영원히 멈추지 않도록 timeout 설정
+    sock.settimeout(1.0)
+    
+    sock.connect((host, port))
+    
+    self.sock = sock
+    self.running.set()
+    
+    
+    self.receive_thread = threading.Thread(
+      target=self.receive_loop,
+      daemon=True,
+    )
+    self.receive_thread.start()
+    
+    # 서버에게 입장 메시지 전송
+    self.send_raw(
+      make_message(
+        "join",
+        self.nickname,
+        "",
+      )
+    )
