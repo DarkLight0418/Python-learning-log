@@ -74,3 +74,25 @@ class ChatClientNetwork:
         "",
       )
     )
+  def send_raw(self, message: dict[str, Any]) -> None:
+    """
+    실제 socket.sendall()을 수행합니다.
+    여러 곳에서 동시에 send할 가능성을 막기 위해 Lock을 사용합니다.
+    """
+    if self.sock is None:
+      raise ConnectionError("소켓이 연결되지 않았습니다.")
+    
+    try:
+      with self.send_lock:
+        self.sock.sendall(encode_message(message))
+        
+    except OSError as exc:
+      self.inbox.put(
+        {
+          "type": "error",
+          "sender": "system",
+          "message": "메시지 전송에 실패했습니다.",
+        }
+      )
+      self.close(send_leave=False)
+      raise ConnectionError("메시지 전송에 실패했습니다.") from exc
