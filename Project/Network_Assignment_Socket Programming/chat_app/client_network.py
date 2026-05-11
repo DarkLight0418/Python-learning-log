@@ -23,3 +23,16 @@ from protocol import ENCODING, Type, encode_message, extract_messages, make_mess
 
 RECV_SIZE = 4096
 
+class ChatClientNetwork:
+  def __init__(self, inbox: "queue.Queue[dict[str, Any]]") -> None:
+    self.inbox = inbox
+    
+    self.sock: socket.socket | None = None
+    self.nickname = ""
+    
+    self.running = threading.Event()
+    self.send_lock = threading.Lock()
+    
+    self.receive_thread: threading.Thread | None = None
+    
+  
