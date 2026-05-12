@@ -59,7 +59,6 @@ class ChatClientNetwork:
     self.sock = sock
     self.running.set()
     
-    
     self.receive_thread = threading.Thread(
       target=self.receive_loop,
       daemon=True,
@@ -102,8 +101,45 @@ class ChatClientNetwork:
       서버에서 오는 메시지를 계속 수신하는 백그라운드 스레드 함수입니다.
       받은 메시지를 inbox Queue에 넣기만 하도록 코드 짤 것!
       """
+      
+      buffer = ""
+      
+      while self.running.is_set():
+        if self.sock is None:
+          break
+        
+        try:
+          chunk = self.sock.recv(RECV_SIZE)
+          
+          if not chunk:
+            self.inbox.put(
+              {
+              "type": "error",
+              "sender": "system",
+              "message": "서버와의 연결이 끊어졌습니다.",
+              }
+            )
+            break
+          
+          buffer += chunk.decode(ENCODING)
+          
+          messages, buffer = extract_messages(buffer)
+          
+          for message in messages:
+            self.inbox.put(message)
+          
+        except socket.timeout:
+          # 주기적으로 running 상태 확인을 위한 장치
+          continue
+        
+        except OSError:
+          break
+        
+      self.running.clear()
+    
     
     def close(self, send_leave: bool = True) -> None:
       """
       서버 연결을 종료합니다.
       """
+      
