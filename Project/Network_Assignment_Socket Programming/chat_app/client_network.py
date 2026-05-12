@@ -95,4 +95,15 @@ class ChatClientNetwork:
         }
       )
       self.close(send_leave=False)
-      raise ConnectionError("메시지 전송에 실패했습니다.") from exc
+      raise ConnectionError("메시지 전송에 실패했습니다! 확인 바랍니다.") from exc
+    
+    def receive_loop(self) -> None:
+      """
+      서버에서 오는 메시지를 계속 수신하는 백그라운드 스레드 함수입니다.
+      받은 메시지를 inbox Queue에 넣기만 하도록 코드 짤 것!
+      """
+    
+    def close(self, send_leave: bool = True) -> None:
+      """
+      서버 연결을 종료합니다.
+      """
