@@ -96,50 +96,84 @@ class ChatClientNetwork:
       self.close(send_leave=False)
       raise ConnectionError("메시지 전송에 실패했습니다! 확인 바랍니다.") from exc
     
-    def receive_loop(self) -> None:
-      """
-      서버에서 오는 메시지를 계속 수신하는 백그라운드 스레드 함수입니다.
-      받은 메시지를 inbox Queue에 넣기만 하도록 코드 짤 것!
-      """
+  def receive_loop(self) -> None:
+    """
+    서버에서 오는 메시지를 계속 수신하는 백그라운드 스레드 함수입니다.
+    받은 메시지를 inbox Queue에 넣기만 하도록 코드 짤 것!
+    """
+    
+    buffer = ""
+    
+    while self.running.is_set():
+      if self.sock is None:
+        break
       
-      buffer = ""
-      
-      while self.running.is_set():
-        if self.sock is None:
+      try:
+        chunk = self.sock.recv(RECV_SIZE)
+        
+        if not chunk:
+          self.inbox.put(
+            {
+            "type": "error",
+            "sender": "system",
+            "message": "서버와의 연결이 끊어졌습니다.",
+            }
+          )
           break
         
-        try:
-          chunk = self.sock.recv(RECV_SIZE)
-          
-          if not chunk:
-            self.inbox.put(
-              {
-              "type": "error",
-              "sender": "system",
-              "message": "서버와의 연결이 끊어졌습니다.",
-              }
-            )
-            break
-          
-          buffer += chunk.decode(ENCODING)
-          
-          messages, buffer = extract_messages(buffer)
-          
-          for message in messages:
-            self.inbox.put(message)
-          
-        except socket.timeout:
-          # 주기적으로 running 상태 확인을 위한 장치
-          continue
+        buffer += chunk.decode(ENCODING)
         
-        except OSError:
-          break
+        messages, buffer = extract_messages(buffer)
         
+        for message in messages:
+          self.inbox.put(message)
+        
+      except socket.timeout:
+        # 주기적으로 running 상태 확인을 위한 장치
+        continue
+      
+      except OSError:
+        break
+      
+    self.running.clear()
+  
+  
+  def close(self, send_leave: bool = True) -> None:
+    """
+    서버 연결을 종료합니다.
+    """
+    if self.sock is None:
       self.running.clear()
+      return
     
-    
-    def close(self, send_leave: bool = True) -> None:
-      """
-      서버 연결을 종료합니다.
-      """
+    if send_leave and self.running.is_set():
+      try:
+        leave_message = make_message(
+          "leave",
+          self.nickname,
+          "",
+        )
+        self.send_raw(leave_message)
+        
+      except ConnectionError:
+        pass
       
+    self.running.clear()
+    
+    try:
+      self.sock.shutdown(socket.SHUT_RDWR)
+    except OSError:
+      pass
+    
+    try:
+      self.sock.close()
+    except OSError:
+      pass
+    
+    try:
+      self.sock.close()
+    except OSError:
+      pass
+    
+    self.sock = None
+    
