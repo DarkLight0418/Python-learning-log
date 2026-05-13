@@ -145,3 +145,47 @@ class ChatFrame(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.on_send_clicked, self.send_button)
         self.Bind(wx.EVT_TEXT_ENTER, self.on_send_clicked, self.message_input)
         self.Bind(wx.EVT_CLOSE, self.on_close)
+        
+    def on_connect_clicked(self, event: wx.CommandEvent) -> None:
+        """
+        Connect 버튼 클릭 시 실행.
+
+        이미 연결되어 있으면 Disconnect 역할을 합니다.
+        """
+        if self.network is not None and self.network.is_connected:
+            self.disconnect()
+            return
+        
+        host = self.host_input.GetValue().strip()
+        port_text = self.port_input.GetValue().strip()
+        nickname = self.nickname_input.GetValue().strip()
+        
+        if not host:
+            self.append_system_message("서버 IP를 입력하세요.")
+            return
+        
+        if not nickname:
+            self.append_system_message("닉네임을 입력하세요.")
+            return
+        
+        try:
+            port = int(port_text)
+        except ValueError:
+            self.append_system_message("포트 번호는 숫자로 입력하세요.")
+            return
+        self.network = ChatClientNetwork(self.inbox)
+        
+        try:
+            self.network.connect(host, port, nickname)
+            
+        except OSError as exc:
+            self.network = None
+            self.append_system_message(f"서버에 접속할 수 없습니다: {exc}")
+            self.set_connected_state(False)
+            return
+        
+        self.append_system_message(f"{host}:{port} 서버에 접속했습니다.")
+        self.set_connected_state(True)
+        self.message_input.SetFocus()
+        
+    
