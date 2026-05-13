@@ -136,3 +136,12 @@ class ChatFrame(wx.Frame):
         )
         
         root.SetSizer(main_sizer)
+    
+    def bind_events(self) -> None:
+        """
+        버튼 클릭, Enter 입력, 창 닫기 이벤트를 연결합니다.
+        """
+        self.Bind(wx.EVT_BUTTON, self.on_connect_clicked, self.connect_button)
+        self.Bind(wx.EVT_BUTTON, self.on_send_clicked, self.send_button)
+        self.Bind(wx.EVT_TEXT_ENTER, self.on_send_clicked, self.message_input)
+        self.Bind(wx.EVT_CLOSE, self.on_close)
