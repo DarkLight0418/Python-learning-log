@@ -39,4 +39,18 @@ class ChatFrame(wx.Frame):
         # 네트워크 수신 메시지를 담을 Queue
         self.inbox: "queue.Queue[dict[str, Any]]" = queue.Queue()
         
+        # 실제 네트워크 객체
+        self.network: ChatClientNetwork | None = None
+        
+        self.build_ui()
+        self.bind_events()
+        
+        # Queue를 주기적으로 확인할 타이머
+        self.timer = wx.Timer(self)
+        self.Bind(wx.EVT_TIMER, self.on_timer, self.timer)
+        self.timer.Start(100)
+        
+        self.set_connected_state(False)
+        
+        self.Centre()
         
