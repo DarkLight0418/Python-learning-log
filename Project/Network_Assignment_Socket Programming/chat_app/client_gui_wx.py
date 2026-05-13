@@ -188,4 +188,25 @@ class ChatFrame(wx.Frame):
         self.set_connected_state(True)
         self.message_input.SetFocus()
         
+    def on_send_clicked(self, event: wx.CommandEvent) -> None:
+        """
+        Send 버튼 또는 Enter 입력 시 실행됩니다.
+        """
+        if self.network is None or not self.network.is_connected:
+            self.append_system_message("먼저 서버에 접속하세요.")
+            return
+        
+        text = self.message_input.GetValue().strip()
+        
+        if not text:
+            return
+        
+        try:
+            self.network.send_chat(text)
+            self.message_input.Clear()
+            
+        except ConnectionError:
+            self.append_system_message("메시지를 보낼 수 없습니다.")
+            self.set_connected_state(False)
+            
     
