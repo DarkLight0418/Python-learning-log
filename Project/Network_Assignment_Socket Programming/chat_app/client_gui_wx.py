@@ -54,3 +54,85 @@ class ChatFrame(wx.Frame):
         
         self.Centre()
         
+    def build_ui(self) -> None:
+        """
+        화면 구성 담당 함수
+        """
+        
+        root = wx.Panel(self)
+        
+        main_sizer = wx.BoxSizer(wx.VERTICAL)
+        
+        # ============================
+        # 접속 설정 영역
+        # ============================
+        
+        connection_box = wx.StaticBox(root, label="Connection")
+        connection_sizer = wx.StaticBoxSizer(connection_box, wx.VERTICAL)
+        
+        row1 = wx.BoxSizer(wx.HORIZONTAL)
+        
+        row1.Add(
+            wx.StaticText(root, label="Server IP"),
+            0,
+            wx.ALIGN_CENTER_VERTICAL | wx.RIGHT,
+            6,
+        )
+        
+        self.host_input = wx.TextCtrl(root, value=DEFAULT_HOST)
+        row1.Add(self.host_input, 1, wx.RIGHT, 12)
+        
+        row1.Add(
+            wx.StaticText(root, label="Port"),
+            0,
+            wx.ALIGN_CENTER_VERTICAL | wx.RIGHT,
+            6,
+        )
+        
+        self.port_input = wx.TextCtrl(root, value=DEFAULT_PORT, size=(90, -1))
+        row1.Add(self.port_input, 0, wx.RIGHT, 12)
+        
+        row1.Add(
+            wx.StaticText(root, label="Nickname"),
+            0,
+            wx.ALIGN_CENTER_VERTICAL | wx.RIGHT,
+            6,
+        )
+        
+        self.nickname_input = wx.TextCtrl(root, value="강냉이", size=(130, -1))
+        row1.Add(self.nickname_input, 0, wx.RIGHT, 12)
+        
+        self.connect_button = wx.Button(root, label="Connect")
+        row1.Add(self.connect_button, 0)
+        
+        connection_sizer.Add(row1, 0, wx.EXPAND | wx.ALL, 8)
+    
+        # ============================
+        # 채팅 출력 영역
+        # ============================
+        self.message_input = wx.TextCtrl(
+            root,
+            style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH2,
+        )
+        
+        # ============================
+        # 메시지 입력 영역
+        # ============================
+        input_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        
+        self.message_input = wx.TextCtrl(
+            root,
+            style=wx.TE_PROCESS_ENTER,
+        )
+        input_sizer.Add(self.message_input, 1, wx.RIGHT, 8)
+        
+        self.send_button = wx.Button(root, label="Send")
+        input_sizer.Add(connection_sizer, 0, wx.EXPAND | wx.ALL, 10)
+        main_sizer.Add(
+            self.chat_output,
+            1,
+            wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM,
+            10,
+        )
+        
+        root.SetSizer(main_sizer)
