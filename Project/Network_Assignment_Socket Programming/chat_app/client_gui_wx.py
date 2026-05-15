@@ -29,6 +29,11 @@ DEFAULT_HOST = "127.0.0.1"
 DEFAULT_PORT = "5000"
 
 class ChatFrame(wx.Frame):
+    """
+    상위 흐름 → 세부 도우미 함수 구조를 따른대요. (Python GUI 기준) 
+    -> 공부 상 적어놓음 / 파이썬은 Java/C 처럼 전방 선언 필요 X
+    """
+    
     def __init__(self) -> None:
         super().__init__(
             parent=None,
