@@ -276,6 +276,17 @@ class ChatFrame(wx.Frame):
         self.port_input.Enable(not connected)
         self.nickname_input.Enable(not connected)
         
+    def disconnect(self) -> None:
+        """
+        사용자가 Disconnect 버튼을 눌렀을 때 실행되도록 처리합니다.
+        """
+        if self.network is not None:
+            self.network.close()
+            self.network = None
+            
+        self.append_system_message("연결을 종료했습니다.")
+        self.set_connected_state(False)
+        
     
     
 class ChatApp(wx.App):
