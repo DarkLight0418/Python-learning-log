@@ -256,6 +256,27 @@ class ChatFrame(wx.Frame):
         """
         self.chat_output.AppendText(text + "\n")
         
+    def append_system_message(self, text: str) -> None:
+        """
+        시스템 메시지 출력
+        """
+        self.chat_output.AppendText(f"[SYSTEM] {text}\n")
+    
+    def set_connected_state(self, connected: bool) -> None:
+        """
+        접속 여부에 따라 버튼과 입력창 상태를 변경합니다.
+        """
+        
+        self.connect_button.SetLabel("연결되지 않음" if connected else "연결됨")
+        
+        self.send_button.Enable(connected)
+        self.message_input.Enable(connected)
+        
+        self.host_input.Enable(not connected)
+        self.port_input.Enable(not connected)
+        self.nickname_input.Enable(not connected)
+        
+    
     
 class ChatApp(wx.App):
     def OnInit(self) -> bool:
