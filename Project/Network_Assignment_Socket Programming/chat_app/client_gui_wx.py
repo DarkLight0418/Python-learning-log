@@ -123,6 +123,7 @@ class ChatFrame(wx.Frame):
         # ============================
         # 메시지 입력 영역
         # ============================
+        
         input_sizer = wx.BoxSizer(wx.HORIZONTAL)
         
         self.message_input = wx.TextCtrl(
@@ -131,15 +132,26 @@ class ChatFrame(wx.Frame):
         )
         input_sizer.Add(self.message_input, 1, wx.RIGHT, 8)
         
+        
+        # send 버튼
+        
         self.send_button = wx.Button(root, label="Send")
     
         input_sizer.Add(self.send_button, 0)
+        
+        
         # ============================
         # 전체 배치
         # ============================
     
         main_sizer.Add(connection_sizer, 
             0, 
+            wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP | wx.BOTTOM,
+            20
+        )
+        
+        main_sizer.Add(input_sizer,
+            0,
             wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP | wx.BOTTOM,
             20
         )
@@ -218,7 +230,7 @@ class ChatFrame(wx.Frame):
             return
         
         try:
-            self.network.send_chat(text)
+            self.network.send_raw(text)
             self.message_input.Clear()
             
         except ConnectionError:
