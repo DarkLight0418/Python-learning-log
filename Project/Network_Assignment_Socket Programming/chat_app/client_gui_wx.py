@@ -226,7 +226,23 @@ class ChatFrame(wx.Frame):
             
             if message.get("type") == "error":
                 self.set_connected_state(False)
+    
+    def append_message(self, message: dict[str, Any]) -> None:
+        """
+        메시지 type에 따라 출력 형식을 다르게 처리합니다.
+        """
+        message_type = message.get("type", "")
+        sender = message.get("sender", "unknown")
+        text = message.get("message", "")
         
+        if message_type == "chat":
+            self.append_chat_line(f"{sender}: {text}")  
+        elif message_type in ("join", "leave"):
+            self.append_chat_line(f"* {text}")
+        elif message_type == "error":
+            self.append_system_message(str(text))            
+        else:
+            self.append_chat_line(str(message))
             
 class ChatApp(wx.App):
     def OnInit(self) -> bool:
