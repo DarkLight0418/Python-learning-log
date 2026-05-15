@@ -132,7 +132,18 @@ class ChatFrame(wx.Frame):
         input_sizer.Add(self.message_input, 1, wx.RIGHT, 8)
         
         self.send_button = wx.Button(root, label="Send")
-        input_sizer.Add(connection_sizer, 0, wx.EXPAND | wx.ALL, 10)
+    
+        input_sizer.Add(self.send_button, 0)
+        # ============================
+        # 전체 배치
+        # ============================
+    
+        main_sizer.Add(connection_sizer, 
+            0, 
+            wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP | wx.BOTTOM,
+            20
+        )
+    
         main_sizer.Add(
             self.chat_output,
             1,
@@ -267,7 +278,7 @@ class ChatFrame(wx.Frame):
         접속 여부에 따라 버튼과 입력창 상태를 변경합니다.
         """
         
-        self.connect_button.SetLabel("연결되지 않음" if connected else "연결됨")
+        self.connect_button.SetLabel("연결됨" if connected else "연결되지 않음")
         
         self.send_button.Enable(connected)
         self.message_input.Enable(connected)
