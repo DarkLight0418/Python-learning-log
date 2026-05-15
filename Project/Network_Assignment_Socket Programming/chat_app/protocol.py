@@ -23,6 +23,11 @@ def make_message(message_type: str, sender: str, message: str) -> dict[str, str]
   }
   
 def encode_message(message: dict[str, Any]) -> bytes:
+  
+  # 방어 코드(오류 발견했을 때 조용히 넘기지 말 것!)
+  if not isinstance(message, dict):
+    raise TypeError(f"message must be dict, got {type(message).__name__}")
+  
   json_text = json.dumps(message, ensure_ascii=False)
   return (json_text + DELIMITER).encode(ENCODING)
 
