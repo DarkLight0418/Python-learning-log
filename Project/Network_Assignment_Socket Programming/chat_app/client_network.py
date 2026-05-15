@@ -73,6 +73,7 @@ class ChatClientNetwork:
         "",
       )
     )
+    
   def send_raw(self, message: dict[str, Any]) -> None:
     """
     실제 socket.sendall()을 수행합니다.
@@ -96,6 +97,14 @@ class ChatClientNetwork:
       self.close(send_leave=False)
       raise ConnectionError("메시지 전송에 실패했습니다! 확인 바랍니다.") from exc
     
+  def send_chat_message(self, sender: str, text: str) -> None:
+    """
+    메시지 반환 정보 더 간소화한 거
+    """
+    message = make_message(Type.TYPE_CHAT, sender, text)
+    self.send_raw(message)
+    
+  
   def receive_loop(self) -> None:
     """
     서버에서 오는 메시지를 계속 수신하는 백그라운드 스레드 함수입니다.
