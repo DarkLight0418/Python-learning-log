@@ -225,12 +225,13 @@ class ChatFrame(wx.Frame):
             return
         
         text = self.message_input.GetValue().strip()
+        nickname = self.nickname_input.GetValue().strip()
         
         if not text:
             return
         
         try:
-            self.network.send_raw(text)
+            self.network.send_chat_message(nickname, text)
             self.message_input.Clear()
             
         except ConnectionError:
