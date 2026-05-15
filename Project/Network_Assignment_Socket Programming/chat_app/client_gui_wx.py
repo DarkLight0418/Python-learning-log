@@ -209,7 +209,24 @@ class ChatFrame(wx.Frame):
             self.append_system_message("메시지를 보낼 수 없습니다.")
             self.set_connected_state(False)
             
+    def on_timer(self, event: wx.TimerEvent) -> None:
+        """
+        wx.Timer가 주기적으로 호출하는 함수입니다.
+
+        Queue에 쌓인 네트워크 메시지를 꺼내서 GUI에 출력합니다.
+        이 함수는 GUI 메인 스레드에서 실행되므로 위젯 수정이 안전합니다.
+        """
+        while True:
+            try:
+                message = self.inbox.get_nowait()
+            except queue.Empty:
+                break
             
+            self.append_message(message)
+            
+            if message.get("type") == "error":
+                self.set_connected_state(False)
+        
             
 class ChatApp(wx.App):
     def OnInit(self) -> bool:
