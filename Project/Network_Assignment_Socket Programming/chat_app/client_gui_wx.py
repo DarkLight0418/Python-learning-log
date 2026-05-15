@@ -209,4 +209,14 @@ class ChatFrame(wx.Frame):
             self.append_system_message("메시지를 보낼 수 없습니다.")
             self.set_connected_state(False)
             
-    
+            
+            
+class ChatApp(wx.App):
+    def OnInit(self) -> bool:
+        frame = ChatFrame()
+        frame.Show()
+        return True
+
+if __name__ == "__main__":
+    app = ChatApp(False)
+    app.MainLoop()
