@@ -115,7 +115,7 @@ class ChatFrame(wx.Frame):
         # ============================
         # 채팅 출력 영역
         # ============================
-        self.message_input = wx.TextCtrl(
+        self.chat_output = wx.TextCtrl(
             root,
             style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH2,
         )
@@ -249,6 +249,14 @@ class ChatFrame(wx.Frame):
         else:
             self.append_chat_line(str(message))
             
+            
+    def append_chat_line(self, text: str) -> None:
+        """
+        일반 채팅 메시지 출력.
+        """
+        self.chat_output.AppendText(text + "\n")
+        
+    
 class ChatApp(wx.App):
     def OnInit(self) -> bool:
         frame = ChatFrame()
