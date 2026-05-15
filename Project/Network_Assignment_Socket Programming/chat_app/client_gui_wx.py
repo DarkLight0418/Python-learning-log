@@ -287,8 +287,17 @@ class ChatFrame(wx.Frame):
         self.append_system_message("연결을 종료했습니다.")
         self.set_connected_state(False)
         
-    
-    
+    def on_close(self, event: wx.CloseEvent) -> None:
+        """
+        창 닫기 버튼을 눌렀을 때 실행됩니다.
+        """
+        self.timer.Stop()
+
+        if self.network is not None:
+            self.network.close()
+            self.network = None
+            
+        self.Destroy()
 class ChatApp(wx.App):
     def OnInit(self) -> bool:
         frame = ChatFrame()
