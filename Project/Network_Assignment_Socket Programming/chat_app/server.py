@@ -19,8 +19,9 @@ RECV_SIZE = 4096
 class ClientInfo:
   socket: socket.socket
   address: tuple[str, int]
+  client_id: str
   nickname: str
-  
+  display_name: str
 class ChatServer:
   def __init__(self, host: str = HOST, port: int = PORT) -> None:
     self.host = host
