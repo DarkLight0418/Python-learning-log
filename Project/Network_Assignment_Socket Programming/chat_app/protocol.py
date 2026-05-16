@@ -15,12 +15,31 @@ class Type:
   TYPE_LEAVE = "leave"
 
 
-def make_message(message_type: str, sender: str, message: str) -> dict[str, str]:
-  return {
-    "type" : message_type,
-    "sender" : sender,
-    "message" : message,
-  }
+def make_message(
+    message_type: str,
+    sender: str = "system",
+    message: str = "",
+    *,
+    sender_id: str = "",
+    display_name: str = "",
+    timestamp: str = "",
+    ) -> dict[str, Any]:
+      data: dict[str, Any] = {
+        "type": message_type,
+        "sender": sender,
+        "message": message,
+      }
+      
+      if sender_id:
+        data["sender_id"] = sender_id
+      
+      if display_name:
+        data["display_name"] = display_name
+        
+      if timestamp:
+        data["timestamp"] = timestamp
+      
+      return data
   
 def encode_message(message: dict[str, Any]) -> bytes:
   
