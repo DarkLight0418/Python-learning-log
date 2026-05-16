@@ -261,7 +261,7 @@ class ChatFrame(wx.Frame):
         메시지 type에 따라 출력 형식을 다르게 처리합니다.
         """
         message_type = message.get("type", "")
-        sender = message.get("sender", "unknown")
+        sender = message.get("display_name") or message.get("sender", "unknown")
         text = message.get("message", "")
         
         if message_type == "chat":
