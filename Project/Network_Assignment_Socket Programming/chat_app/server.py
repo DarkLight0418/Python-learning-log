@@ -141,21 +141,38 @@ class ChatServer:
     text = str(message.get("message", ""))
     
     if message_type == "join":
-      self.set_nickname(client_socket, sender)
+      
+      info = self.set_nickname(client_socket, sender)
+      
+      if info is None:
+        return
+      
       
       join_message = make_message(
         "join",
-        sender,
-        f"{sender}님이 입장했습니다.",
+        info.nickname,
+        f"{info.display_name}님이 입장했습니다.",
+        sender_id=info.client_id,
+        display_name=info.display_name,
       )
+      
       self.broadcast(join_message)
-        
-        
+
     elif message_type == "chat":
+      
+      with self.clients_lock:
+        info = self.clients.get(client_socket)
+        
+      if info is None:
+        return
+      
+      
       chat_message = make_message(
         "chat",
-        sender,
+        info.nickname,
         text,
+        sender_id=info.client_id,
+        display_name=info.display_name,
       )
       
       self.broadcast(chat_message)
