@@ -8,6 +8,7 @@ from __future__ import annotations
 import socket
 import threading
 from dataclasses import dataclass
+from uuid import uuid4
 
 from protocol import ENCODING, encode_message, extract_messages, make_message
 
@@ -22,6 +23,7 @@ class ClientInfo:
   client_id: str
   nickname: str
   display_name: str
+  
 class ChatServer:
   def __init__(self, host: str = HOST, port: int = PORT) -> None:
     self.host = host
@@ -71,11 +73,17 @@ class ChatServer:
           
           print(f"[SERVER] 연결됨: {address}")
           
+          
+          # UUID 통해서 일련의 멤버 값 생성하는 거
+          client_id = uuid4().hex[:8]
+          
           with self.clients_lock:
             self.clients[client_socket] = ClientInfo(
               socket=client_socket,
               address=address,
+              client_id=client_id,
               nickname="",
+              display_name=f"guest#{client_id[:4]}"
             )
             
           client_thread = threading.Thread(
