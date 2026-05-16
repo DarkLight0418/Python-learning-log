@@ -164,13 +164,19 @@ class ChatServer:
       # 직접 브로드캐스트하지 않음, finally의 remove_client(()에서 퇴장 메시지 하나만 보내게 함
       self.remove_client(client_socket, notify_leave=True)
       
-  def set_nickname(self, client_socket: socket.socket, nickname: str) -> None:
+  def set_nickname(self, client_socket: socket.socket, nickname: str) -> ClientInfo | None:
     """ 
-    클라이언트 닉네임 저장
+    클라이언트 닉네임, 표시 이름 저장
     """
     with self.clients_lock:
-      if client_socket in self.clients:
-        self.clients[client_socket].nickname = nickname
+      info = self.clients.get(client_socket)
+      
+      if info is None:
+        return None
+      info.nickname = nickname
+      info.display_name = f"{nickname}#{info.client_id[:4]}"
+      
+      return info
     
   def broadcast(self, message: dict[str, str]) -> None:
     """
