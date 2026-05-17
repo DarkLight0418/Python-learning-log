@@ -46,6 +46,7 @@ class ChatFrame(wx.Frame):
         
         # 실제 네트워크 객체
         self.network: ChatClientNetwork | None = None
+        self.client_id = ""
         
         self.build_ui()
         self.bind_events()
@@ -322,6 +323,11 @@ class ChatFrame(wx.Frame):
             self.network = None
             
         self.Destroy()
+        
+class MessageBubblePanel(wx.Panel):
+    def __init__(self, parent, message, is_mine=False, is_system=False):
+        pass
+    
 class ChatApp(wx.App):
     def OnInit(self) -> bool:
         frame = ChatFrame()
