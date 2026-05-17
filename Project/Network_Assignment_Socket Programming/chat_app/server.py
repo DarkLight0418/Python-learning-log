@@ -155,6 +155,16 @@ class ChatServer:
       if info is None:
         return
       
+      welcome_message = make_message(
+        "welcome",
+        info.nickname,
+        f"{info.display_name}님으로 접속했습니다.",
+        sender_id=info.client_id,
+        display_name=info.display_name,
+      )
+      
+      self.send_to(client_socket, welcome_message)
+      
       
       join_message = make_message(
         "join",
