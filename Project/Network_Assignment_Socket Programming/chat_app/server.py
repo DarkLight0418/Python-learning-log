@@ -9,6 +9,7 @@ import socket
 import threading
 from dataclasses import dataclass
 from uuid import uuid4
+from typing import Any
 
 from protocol import ENCODING, encode_message, extract_messages, make_message
 
@@ -122,6 +123,13 @@ class ChatServer:
       pass
     
     finally:
+      self.remove_client(client_socket, notify_leave=True)
+  
+  # GUI cliend_id 보강을 위해 send_to 추가
+  def send_to(self, client_socket: socket.socket, message: dict[str, Any]) -> None:
+    try:
+      client_socket.sendall(encode_message(message))
+    except OSError:
       self.remove_client(client_socket, notify_leave=True)
   
   def handle_message(self, client_socket: socket.socket, message: dict) -> None:
