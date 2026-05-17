@@ -237,12 +237,16 @@ class ChatServer:
     """
     
     nickname = ""
+    client_id = ""
+    display_name = ""
     
     with self.clients_lock:
       info = self.clients.pop(client_socket, None)
       
       if info is not None:
         nickname = info.nickname
+        client_id = info.client_id
+        display_name = info.display_name
         
     try:
       client_socket.close()
@@ -256,7 +260,9 @@ class ChatServer:
         leave_message = make_message(
           "leave",
           nickname,
-          f"{nickname}님이 퇴장했습니다.",
+          f"{display_name}님이 퇴장했습니다.",
+          sender_id=client_id,
+          display_name=display_name,
         )
         
         self.broadcast(leave_message)
