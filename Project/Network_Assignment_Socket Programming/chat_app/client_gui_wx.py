@@ -116,10 +116,12 @@ class ChatFrame(wx.Frame):
         # ============================
         # 채팅 출력 영역
         # ============================
-        self.chat_output = wx.TextCtrl(
-            root,
-            style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH2,
-        )
+        self.chat_area = wx.ScrolledWindow(root, style=wx.VSCROLL)
+        self.chat_area.SetScrollRate(0, 20)
+        self.chat_area.SetBackgroundColour(wx.Colour(245, 246, 248))
+        
+        self.chat_sizer = wx.BoxSizer(wx.VERTICAL)
+        self.chat_area.SetSizer(self.chat_sizer)
         
         # ============================
         # 메시지 입력 영역
@@ -158,7 +160,7 @@ class ChatFrame(wx.Frame):
         )
     
         main_sizer.Add(
-            self.chat_output,
+            self.chat_area,
             1,
             wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM,
             10,
