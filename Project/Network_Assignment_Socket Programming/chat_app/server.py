@@ -213,7 +213,7 @@ class ChatServer:
       
       return info
     
-  def broadcast(self, message: dict[str, str]) -> None:
+  def broadcast(self, message: dict[str, Any]) -> None:
     """
     현재 접속 중인 모든 클라이언트에게 메시지 전송
     """
