@@ -327,8 +327,22 @@ class ChatFrame(wx.Frame):
         self.Destroy()
         
 class MessageBubblePanel(wx.Panel):
-    def __init__(self, parent, message, is_mine=False, is_system=False):
-        pass
+    def __init__(self,
+                parent: wx.Window, 
+                message: dict[str, Any], 
+                is_mine: bool = False, 
+                is_system: bool = False 
+        ) -> None:
+        super().__init__(parent)
+        
+        self.SetBackgroundColour(parent.GetBackgroundColour())
+        
+        outer_sizer = wx.BoxSizer(wx.HORIZONTAL)
+        
+        if is_system:
+            text = str(message.get("message", ""))
+            
+            label = wx.StaticText(self, label=f"  {text}  ")
     
 class ChatApp(wx.App):
     def OnInit(self) -> bool:
