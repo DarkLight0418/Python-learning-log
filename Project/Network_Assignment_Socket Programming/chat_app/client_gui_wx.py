@@ -343,6 +343,52 @@ class MessageBubblePanel(wx.Panel):
             text = str(message.get("message", ""))
             
             label = wx.StaticText(self, label=f"  {text}  ")
+            label.SetForegroundColour(wx.Colour(100, 100, 100))
+            label.SetBackgroundColour(wx.Colour(230, 230, 230))
+            
+            font = label.GetFont()
+            font.SetPointSize(9)
+            label.SetFont(font)
+            
+            outer_sizer.AddStretchSpacer(1)
+            outer_sizer.Add(label, 0, wx.ALL, 4)
+            outer_sizer.AddStretchSpacer(1)
+            
+            self.SetSizer(outer_sizer)
+            return
+        
+        sender = str(message.get("display_name") or message.get("sender", "unknown"))
+        text = str(message.get("message", ""))
+        timestamp = str(message.get("timestamp", ""))
+        
+        bubble_container = wx.Panel(self)
+        bubble_container.SetBackgroundColour(
+            wx.Colour(220, 238, 255) if is_mine else wx.Colour(255, 255, 255)
+        )
+        
+        bubble_sizer = wx.BoxSizer(wx.VERTICAL)
+        
+        if not is_mine:
+            sender_label = wx.StaticText(bubble_container, label=sender)
+            sender_label.SetForegroundColour(wx.Colour(80, 80, 80))
+            
+            sender_font = sender_label.GetFont()
+            sender_font.SetPointSize(8)
+            sender_font.SetWeight(wx.FONTWEIGHT_BOLD)
+            sender_label.SetFont(sender_font)
+            
+            bubble_sizer.Add(sender_label, 0, wx.LEFT | wx.RIGHT | wx.TOP, 8)
+            
+        message_label = wx.StaticText(bubble_container, label=text)
+        message_label.Wrap(360)
+        
+        message_font = message_label.GetFont()
+        message_font.SetPointSize(10)
+        message_label.SetFont(message_font)
+        
+        bubble_sizer.Add(message_label, 0, wx.ALL, 8)
+        
+        
     
 class ChatApp(wx.App):
     def OnInit(self) -> bool:
