@@ -390,7 +390,16 @@ class MessageBubblePanel(wx.Panel):
         
         if timestamp:
             time_label = wx.StaticText(bubble_container, label=timestamp)
-            time_label.SetBackgroundColour(wx.Colour(120, 120, 120))
+            time_label.SetForegroundColour(wx.Colour(120, 120, 120))
+            
+            time_font = time_label.GetFont()
+            time_font.SetPointSize(8)
+            time_label.SetFont(time_font)
+            
+            bubble_sizer.Add(time_label, 0, wx.ALIGN_RIGHT | wx.RIGHT | wx.BOTTOM, 0)
+            
+        bubble_container.SetSizer(bubble_sizer)
+            
     
 class ChatApp(wx.App):
     def OnInit(self) -> bool:
