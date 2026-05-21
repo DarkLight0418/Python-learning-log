@@ -400,6 +400,15 @@ class MessageBubblePanel(wx.Panel):
             
         bubble_container.SetSizer(bubble_sizer)
             
+        if is_mine:
+            outer_sizer.AddStretchSpacer(1)
+            outer_sizer.Add(bubble_container, 0, wx.ALL, 4)
+        else:
+            outer_sizer.Add(bubble_container, 0, wx.ALL, 4)
+            outer_sizer.AddStretchSpacer(1)
+            
+        self.SetSizer(outer_sizer)
+    
     
 class ChatApp(wx.App):
     def OnInit(self) -> bool:
