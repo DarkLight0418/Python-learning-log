@@ -329,9 +329,21 @@ class ChatFrame(wx.Frame):
             is_system=is_system,
         )
         
+        self.chat_sizer.Add(
+            bubble,
+            0,
+            wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP,
+            6,
+        )
         
+        self.chat_area.Layout()
+        self.chat_area.FitInside()
         
-        
+        wx.CallAfter(
+            self.chat_area.Scroll,
+            -1,
+            self.chat_area.GetVirtualSize().height,
+        )
         
     def append_chat_line(self, text: str) -> None:
         """
