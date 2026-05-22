@@ -264,19 +264,75 @@ class ChatFrame(wx.Frame):
         메시지 type에 따라 출력 형식을 다르게 처리합니다.
         """
         message_type = message.get("type", "")
+        
         sender = message.get("display_name") or message.get("sender", "unknown")
         text = message.get("message", "")
         
+        if message_type == "welcome":
+            self.client_id = str(message.get("sender_id", ""))
+            
+            self.append_bubble(
+                {
+                    "message": str(message.get("message", "서버에 접속했습니다.")),
+                },
+                is_system=True,
+            )
+            return
+        
         if message_type == "chat":
-            self.append_chat_line(f"{sender}: {text}")  
-        elif message_type in ("join", "leave"):
-            self.append_chat_line(f"* {text}")
-        elif message_type == "error":
-            self.append_system_message(str(text))            
-        else:
-            self.append_chat_line(str(message))
-            
-            
+            sender_id = str(message.get("sender_id", ""))
+            is_mine = sender_id != "" and sender_id == self.client_id
+
+            self.append_bubble(
+                message,
+                is_mine=is_mine,
+                is_system=False,
+            )
+            return
+        
+        if message_type in ("join", "leave"):
+            self.append_bubble(
+                {
+                    "message": str(message.get("message", "")),
+                },
+                is_system=True,
+            )
+            return
+        if message_type == "error":
+            self.append_bubble(
+                {
+                    "message": f"[ERROR] {message.get('message', '')}",
+                },
+                is_system=True,
+            )
+            return
+
+        self.append_bubble(
+            {
+                "message": str(message),
+            },
+            is_system=True,
+        )
+                
+        
+    def append_bubble(
+        self,
+        message: dict[str, Any],
+        *,
+        is_mine: bool = False,
+        is_system: bool = False,
+    ) -> None:
+        bubble = MessageBubblePanel(
+            self.chat_area,
+            message,
+            is_mine=is_mine,
+            is_system=is_system,
+        )
+        
+        
+        
+        
+        
     def append_chat_line(self, text: str) -> None:
         """
         일반 채팅 메시지 출력.
