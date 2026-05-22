@@ -153,18 +153,19 @@ class ChatFrame(wx.Frame):
             20
         )
         
-        main_sizer.Add(input_sizer,
-            0,
-            wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP | wx.BOTTOM,
-            20
-        )
-    
         main_sizer.Add(
             self.chat_area,
             1,
             wx.EXPAND | wx.LEFT | wx.RIGHT | wx.BOTTOM,
             10,
         )
+        
+        main_sizer.Add(input_sizer,
+            0,
+            wx.EXPAND | wx.LEFT | wx.RIGHT | wx.TOP | wx.BOTTOM,
+            20
+        )
+
         
         root.SetSizer(main_sizer)
     
