@@ -349,13 +349,23 @@ class ChatFrame(wx.Frame):
         """
         일반 채팅 메시지 출력.
         """
-        self.chat_output.AppendText(text + "\n")
+        self.append_bubble(
+            {
+                "message": text,
+            },
+            is_system=True,
+        )
         
     def append_system_message(self, text: str) -> None:
         """
         시스템 메시지 출력
         """
-        self.chat_output.AppendText(f"[SYSTEM] {text}\n")
+        self.append_bubble(
+            {
+                "message":f"[SYSTEM] {text}",
+            },
+            is_system=True,
+        )
     
     def set_connected_state(self, connected: bool) -> None:
         """
