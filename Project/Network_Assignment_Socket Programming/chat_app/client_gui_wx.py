@@ -373,7 +373,7 @@ class ChatFrame(wx.Frame):
         접속 여부에 따라 버튼과 입력창 상태를 변경합니다.
         """
         
-        self.connect_button.SetLabel("연결됨" if connected else "연결되지 않음")
+        self.connect_button.SetLabel("연결 종료" if connected else "연결")
         
         self.send_button.Enable(connected)
         self.message_input.Enable(connected)
