@@ -1,10 +1,16 @@
-
 from vds.core.errors import EmptyStackError
+from dataclasses import dataclass, field
 
 """
 스택 클래스, 예외 코드
 2026.02.21 최초 작성
 """
+
+@dataclass(frozen=True)
+class StackNode:
+  id: str
+  value: object
+  
 
 class Stack:
   def __init__(self):
