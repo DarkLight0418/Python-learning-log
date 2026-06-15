@@ -19,6 +19,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any
 
+from enum import Enum
+
 
 class OperationStatus(str, Enum):
     SUCCESS = "success"
@@ -53,6 +55,7 @@ class OperationResult:
     def ok(self) -> bool:
         return self.status == OperationStatus.SUCCESS
     
+    # 성공하는 경우
     @classmethod
     def success(
         cls,
@@ -70,6 +73,7 @@ class OperationResult:
         )
     
     
+    # 실패하는 경우
     @classmethod
     def failure(
         cls,
