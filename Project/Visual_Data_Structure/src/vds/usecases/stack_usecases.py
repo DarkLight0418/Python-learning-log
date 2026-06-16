@@ -86,12 +86,23 @@ class StackUsecase:
         pop을 반복해서 비움.
         """
         
+        while not self._stack.is_empty():
+            self._stack.pop()
+            
+        return OperationResult.success(
+            operation="clear",
+            message="스택을 초기화했습니다.",
+            snapshot=self.snapshot(),
+        )
+        
     def snapshot(self) -> tuple[Any, ...]:
         """
         현재 Stack 상태를 불변 tuple로 반환.
 
         Presenter는 이 snapshot을 받아 Scene으로 변환.
         """
+        
+        return tuple(self._stack.snapshot())
         
     def size(self) -> int:
         return self._stack.size()
@@ -105,6 +116,13 @@ class StackUsecase:
 
         현재 MVP에서는 문자열 입력을 주로 가정.
         """
+        if raw_value is None:
+            return None
         
+        if isinstance(raw_value, str):
+            value = raw_value.strip()
+            if value == "":
+                return None
+            return value
         
-    
+        return raw_value
