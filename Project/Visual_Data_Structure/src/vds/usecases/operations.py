@@ -89,3 +89,26 @@ class OperationResult:
             value=value,
             snapshot=tuple(snapshot),
         )
+        
+        
+        
+        
+"""
+(복습용 기록)
+
+operations.py 공부 기록
+
+이 파일은 Usecase가 작업한 결과를 담는 공통 결과 객체를 만든다.
+
+Usecase가 직접 print하면 나중에 GUI나 웹으로 바꿀 때 문제가 생긴다.
+그래서 Usecase는 화면에 직접 말하지 않고 OperationResult를 반환한다.
+
+OperationResult에는 성공/실패, 메시지, 결과값, 현재 자료구조 상태가 들어간다.
+
+즉, Usecase는 일을 하고 '결과 보고서'를 돌려준다.
+화면에 어떻게 보여줄지는 Presenter나 UI가 결정한다.
+
+오늘 이해한 문장:
+Usecase는 요리사이고, OperationResult는 완성된 음식과 설명이 담긴 쟁반이다.
+
+"""
