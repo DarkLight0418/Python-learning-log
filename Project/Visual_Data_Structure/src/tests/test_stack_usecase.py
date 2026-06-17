@@ -27,7 +27,7 @@ def test_push_empty_value_fails():
     
 def test_pop_success():
     usecase = StackUsecase()
-    usecase.pop("10")
+    usecase.push("10")
     usecase.push("20")
     
     result = usecase.pop()
@@ -60,7 +60,7 @@ def test_top_does_not_remove_value():
     
 
 def test_clear_removes_all_values():
-    usecase = StackUsecase
+    usecase = StackUsecase()
     usecase.push("10")
     usecase.push("20")
     
