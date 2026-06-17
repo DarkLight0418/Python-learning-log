@@ -78,6 +78,22 @@ class StackUsecase:
         값을 제거하지는 않음.
         """
         
+        try:
+            top_value = self._stack.top()
+        except EmptyStackError as error:
+            return OperationResult.failure(
+                operation="top",
+                message=str(error),
+                snapshot=self.snapshot(),
+            )
+            
+        return OperationResult.success(
+            operation="top",
+            message=f"현재 top값은 {top_value}입니다.",
+            value=top_value,
+            snapshot=self.snapshot(),
+        )
+        
     def clear(self) -> OperationResult:
         """
         Stack을 비움.
