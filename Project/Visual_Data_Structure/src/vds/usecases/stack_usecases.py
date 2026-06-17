@@ -71,6 +71,22 @@ class StackUsecase:
         실패 결과로 변환.
         """
         
+        try:
+            popped = self._stack.pop()
+        except EmptyStackError as error:
+            return OperationResult.failure(
+                operation="pop",
+                message=str(error),
+                snapshot=self.snapshot(),
+            )
+            
+        return OperationResult.success(
+            operation="pop",
+            message=f"{popped} 값을 pop했습니다.",
+            value=popped,
+            snapshot=self.snapshot(),
+        )
+        
     def top(self) -> OperationResult:
         """
         Stack의 top 값 조회.
