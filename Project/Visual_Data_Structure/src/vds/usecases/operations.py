@@ -10,7 +10,7 @@ UI/Presenter가 사용할 수 있는 결과를 OperationResult 형태로 반환
 사용자에게 보여줄 메시지 생성
 현재 snapshot 반환
 
-2026.06.15 작성
+2026.06.15 최초 작성
 """
 
 

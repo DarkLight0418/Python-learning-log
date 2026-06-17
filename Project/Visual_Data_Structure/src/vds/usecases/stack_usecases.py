@@ -4,7 +4,7 @@ Stack Usecase.
 UI나 Controller가 Stack을 직접 조작하지 않고,
 이 Usecase를 통해 push/pop/top 등의 명령을 실행하도록 한다.
 
-2026.06.16 작성
+2026.06.16 최초 작성
 
 """
 
