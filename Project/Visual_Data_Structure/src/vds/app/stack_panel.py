@@ -1,0 +1,42 @@
+"""
+StackPanel.
+
+스택 시각화 기능 하나를 담당하는 Tkinter 화면 조각.
+MainWindow는 이 클래스를 가져와 배치만 하고,
+StackUsecase/Presenter/View 연결은 StackPanel 내부에서 처리.
+
+2026.06.18. 최초 작성
+"""
+
+from __future__ import annotations
+
+import tkinter as tk
+
+from vds.presenter.stack_presenter import StackPresenter
+from vds.usecases.operations import OperationResult
+from vds.usecases.stack_usecase import StackUsecase
+from vds.view.tk.canvas_view import TkCanvasView
+
+class StackPanel(tk.Frame):
+    """
+    Stack 기능 전용 UI 모듈.
+
+    책임:
+        - Entry/Button/Canvas 배치
+        - 버튼 이벤트 처리
+        - StackUsecase 호출
+        - Presenter/View를 이용한 화면 갱신
+
+    책임이 아닌 것:
+        - root window 생성
+        - 앱 전체 메뉴/라우팅 관리
+        - 다른 자료구조 화면 관리
+    """
+    
+    def __init__(
+        self,
+        master: tk.Misc,
+        usecase: StackUsecase | None = None,
+        presenter: StackPresenter | None = None,
+    ):
+        super().__init__(master)
