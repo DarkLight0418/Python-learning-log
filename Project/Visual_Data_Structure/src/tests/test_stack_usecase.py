@@ -4,7 +4,7 @@
 """
 
 
-from vds.usecases.stack_usecases import StackUsecase
+from vds.usecases.stack_usecase import StackUsecase
 
 def test_push_success():
     usecase = StackUsecase()
