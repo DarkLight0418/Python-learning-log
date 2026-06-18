@@ -40,3 +40,11 @@ class StackPanel(tk.Frame):
         presenter: StackPresenter | None = None,
     ):
         super().__init__(master)
+        
+        self.usecase = usecase or StackUsecase()
+        self.presenter = presenter or StackPresenter()
+        
+        self._build_widgets()
+        self._render_current_stack()
+        
+    
