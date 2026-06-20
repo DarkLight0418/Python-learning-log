@@ -58,4 +58,45 @@ class StackPanel(tk.Frame):
         self.canvas.grid(row=0, column=1, sticky="nsew", padx=12, pady=12)
         self.view = TkCanvasView(self.canvas)
         
+        title_label = tk.Label(
+            self.control_frame,
+            text="Stack",
+            font=("Arial", 14, "bold"),
+            anchor="w",
+        )
+        
+        title_label.pack(fill=tk.x, pady=(0, 12))
+        
+        self.value_entry = tk.Entry(self.control_frame)
+        self.value_entry.pack(fill=tk.X, pady=(0, 8))
+        self.value_entry.bind("<Return>", lambda _event: self._handle_push())
+        
+        self.push_button = tk.Button(
+            self.control_frame,
+            text="Push",
+            command=self._handle_push,
+        )
+        self.push_button.pack(fill=tk.x, pady=4)
+        
+        self.pop_button = tk.Button(
+            self.control_frame,
+            text="Pop",
+            command=self._handle_pop,
+        )
+        self.pop_button.pack(fill=tk.X, pady=4)
+        
+        self.top_button = tk.Button(
+            self.control_frame,
+            text="Top",
+            command=self._handle_top,
+        )
+        self.top_button.pack(fill=tk.X, pady=4)
+        
+        self.clear_button = tk.Button(
+            self.control_frame,
+            text="Clear",
+            command=self._handle_clear,
+        )
+        self.clear_button.pack(fill=tk.x, pady=4)
+        
         
