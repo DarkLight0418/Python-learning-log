@@ -47,4 +47,15 @@ class StackPanel(tk.Frame):
         self._build_widgets()
         self._render_current_stack()
         
-    
+    def _build_widgets(self) -> None:
+        self.columnconfigure(1, weight=1)
+        self.rowconfigure(0, weight=1)
+        
+        self.control_frame = tk.Frame(self)
+        self.control_frame.grid(row=0, column=0, sticky="ns", padx=12, pady=12)
+        
+        self.canvas = tk.Canvas(self, width=800, height=600)
+        self.canvas.grid(row=0, column=1, sticky="nsew", padx=12, pady=12)
+        self.view = TkCanvasView(self.canvas)
+        
+        
