@@ -99,4 +99,13 @@ class StackPanel(tk.Frame):
         )
         self.clear_button.pack(fill=tk.x, pady=4)
         
+        self.message_label = tk.Label(
+            self.control_frame,
+            text="값을 입력하고 Push를 눌러보세요",
+            anchor="w",
+            justify="left",
+            wraplength=180,
+        )
+        
+        self.message_label.pack(fill=tk.x, pady=(16, 0))
         
