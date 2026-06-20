@@ -109,3 +109,8 @@ class StackPanel(tk.Frame):
         
         self.message_label.pack(fill=tk.x, pady=(16, 0))
         
+    def _handle_push(self) -> None:
+        result = self.usecase.push(self.value_entry.get())
+        if result.ok:
+            self.value_entry.delete(0, tk.END)
+        self._apply_result(result)
