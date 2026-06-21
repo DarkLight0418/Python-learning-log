@@ -65,7 +65,7 @@ class StackPanel(tk.Frame):
             anchor="w",
         )
         
-        title_label.pack(fill=tk.x, pady=(0, 12))
+        title_label.pack(fill=tk.X, pady=(0, 12))
         
         self.value_entry = tk.Entry(self.control_frame)
         self.value_entry.pack(fill=tk.X, pady=(0, 8))
@@ -76,7 +76,7 @@ class StackPanel(tk.Frame):
             text="Push",
             command=self._handle_push,
         )
-        self.push_button.pack(fill=tk.x, pady=4)
+        self.push_button.pack(fill=tk.X, pady=4)
         
         self.pop_button = tk.Button(
             self.control_frame,
@@ -97,7 +97,7 @@ class StackPanel(tk.Frame):
             text="Clear",
             command=self._handle_clear,
         )
-        self.clear_button.pack(fill=tk.x, pady=4)
+        self.clear_button.pack(fill=tk.X, pady=4)
         
         self.message_label = tk.Label(
             self.control_frame,
@@ -107,7 +107,7 @@ class StackPanel(tk.Frame):
             wraplength=180,
         )
         
-        self.message_label.pack(fill=tk.x, pady=(16, 0))
+        self.message_label.pack(fill=tk.X, pady=(16, 0))
         
     def _handle_push(self) -> None:
         result = self.usecase.push(self.value_entry.get())
