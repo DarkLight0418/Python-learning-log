@@ -14,4 +14,9 @@ from vds.usecases.stack_usecase import StackUsecase
 def create_stack_panel(master: tk.Misc) -> StackPanel:
     usecase = StackUsecase()
     presenter = StackPresenter()
-    return StackPanel(master, usecase=usecase, presenter=presenter)
+    
+    return StackPanel(
+        master=master, 
+        usecase=usecase, 
+        presenter=presenter
+    )
