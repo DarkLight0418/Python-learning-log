@@ -69,19 +69,28 @@ def compute_stack_layout(n_items: int, spec: StackLayoutSpec) -> StackLayout:
     
   # TOP 포인터 타겟(아이템이 있으면 최상단, 없으면 바닥 기준)
   if n_items > 0:
-    top_geom = item_geoms[-1]
-    target_y = top_geom.pos.y + top_geom.size.y / 2.0
-    target_x = top_geom.pos.x
+      top_geom = item_geoms[-1]
+      target_y = top_geom.pos.y + top_geom.size.y / 2.0
+      target_x = top_geom.pos.x
   else:
-    target_y = area_bottom - spec.item_height / 2.0
-    target_x = x
+      target_y = area_bottom - spec.item_height / 2.0
+      target_x = x
 
-  # 라벨은 영역 왼쪽 근처, 화살표는 라벨 오른쪽에서 시작
-  label_x = area_left + 16
+  # TOP 포인터 배치 규칙
+  # - 화살표 머리(end)는 스택 박스 왼쪽 근처
+  # - 화살표 꼬리(start)는 그보다 왼쪽
+  # - TOP 라벨은 화살표 꼬리보다 더 왼쪽
+  arrow_to_box_gap = 10
+  arrow_length = 48
+  label_to_arrow_gap = 8
+
+  arrow_end_x = target_x - arrow_to_box_gap
+  arrow_start_x = arrow_end_x - arrow_length
+  label_x = arrow_start_x - label_to_arrow_gap
+
   top_label_pos = Vec2(x=label_x, y=target_y)
-
-  top_arrow_start = Vec2(x=label_x + 48, y=target_y)
-  top_arrow_end = Vec2(x=target_x - 10, y=target_y)
+  top_arrow_start = Vec2(x=arrow_start_x, y=target_y)
+  top_arrow_end = Vec2(x=arrow_end_x, y=target_y)
 
   return StackLayout(
       spec=spec,
