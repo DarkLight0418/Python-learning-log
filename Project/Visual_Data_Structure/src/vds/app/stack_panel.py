@@ -128,4 +128,12 @@ class StackPanel(tk.Frame):
         self._update_message(result.message)
         self._render_snapshot(result.snapshot)
         
-    
+    def _render_current_stack(self) -> None:
+        self._render_snapshot(self.usecase.snapshot())
+        
+    def _render_snapshot(self, snapshot: tuple[object, ...]) -> None:
+        scene = self.presenter.present_from_values(list(snapshot))
+        self.view.render(scene)
+        
+    def _update_message(self, message: str) -> None:
+        self.message_label.config(text=message)
