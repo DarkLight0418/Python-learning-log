@@ -1,3 +1,11 @@
+"""
+메인 윈도우 파트
+다른 panel 쪽에서 import해서 사용할 것
+
+2026.02.28. 최초 작성(나중에 정확한 날짜 기재 예정)
+
+"""
+
 import tkinter as tk
 from vds.app.wiring import create_stack_panel
 
