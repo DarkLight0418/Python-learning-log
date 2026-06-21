@@ -114,3 +114,18 @@ class StackPanel(tk.Frame):
         if result.ok:
             self.value_entry.delete(0, tk.END)
         self._apply_result(result)
+
+    def _handle_pop(self) -> None:
+        self._apply_result(self.usecase.pop())
+        
+    def _handle_top(self) -> None:
+        self._apply_result(self.usecase.top())
+        
+    def _handle_clear(self) -> None:
+        self._apply_result(self.usecase.clear())
+        
+    def _apply_result(self, result: OperationResult) -> None:
+        self._update_message(result.message)
+        self._render_snapshot(result.snapshot)
+        
+    
