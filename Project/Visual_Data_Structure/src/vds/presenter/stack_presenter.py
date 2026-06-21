@@ -95,26 +95,27 @@ class StackPresenter:
       )
       
     # --- TOP 포인터(라벨 + 화살표) ---
-    items.append(
-        TextItem(
-            key="stack:top:label",
-            pos=layout.top_label_pos,
-            text="TOP",
-            style=Style(role="pointer_label"),
-            align="left",
-            z=80,
-        )
-    )
-    items.append(
-        ArrowItem(
-            key="stack:top:arrow",
-            start=layout.top_arrow_start,
-            end=layout.top_arrow_end,
-            style=Style(role="pointer_arrow"),
-            head_size=10.0,
-            z=70,
-        )
-    )
+    if len(values) > 0:
+      items.append(
+          TextItem(
+              key="stack:top:label",
+              pos=layout.top_label_pos,
+              text="TOP",
+              style=Style(role="pointer_label"),
+              align="right",
+              z=80,
+          )
+      )
+      items.append(
+          ArrowItem(
+              key="stack:top:arrow",
+              start=layout.top_arrow_start,
+              end=layout.top_arrow_end,
+              style=Style(role="pointer_arrow"),
+              head_size=10.0,
+              z=70,
+          )
+      )
     
     return Scene(
         meta=meta,
