@@ -9,5 +9,9 @@ class DomainError(Exception):
 class EmptyStackError(DomainError):
   def __init__(self, message="스택이 비어있습니다."):
     super().__init__(message)
+    
+class StackOverflowError(Exception):
+  """스택 오버플로우 에러"""
+  pass
 
 
