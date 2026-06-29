@@ -12,7 +12,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from vds.core.errors import EmptyStackError
+from vds.core.errors import EmptyStackError, StackOverflowError
 from vds.core.stack import Stack
 from vds.usecases.operations import OperationResult
 
@@ -54,7 +54,15 @@ class StackUsecase:
                 snapshot=self.snapshot(),
             )
             
-        self._stack.push(value)
+        try:
+            self._stack.push(value)
+        except StackOverflowError as e:
+            return OperationResult.failure(
+                operation=str(e),
+                value=value,
+                snapshot=self.snapshot(),
+            )
+        
         
         return OperationResult.success(
             operation="push",
