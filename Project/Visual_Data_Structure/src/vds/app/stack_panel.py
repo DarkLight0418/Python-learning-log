@@ -101,7 +101,7 @@ class StackPanel(tk.Frame):
         
         self.message_label = tk.Label(
             self.control_frame,
-            text="값을 입력하고 Push를 눌러보세요",
+            text=f"값을 입력하고 Push를 눌러보세요. 최대 {self.usecase._stack.capacity()}개까지 가능합니다.",
             anchor="w",
             justify="left",
             wraplength=180,
