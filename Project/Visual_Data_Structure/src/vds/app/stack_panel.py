@@ -125,7 +125,7 @@ class StackPanel(tk.Frame):
         self._apply_result(self.usecase.clear())
         
     def _apply_result(self, result: OperationResult) -> None:
-        self._update_message(result.message)
+        self._update_message(result)
         self._render_snapshot(result.snapshot)
         
     def _render_current_stack(self) -> None:
@@ -135,5 +135,10 @@ class StackPanel(tk.Frame):
         scene = self.presenter.present_from_values(list(snapshot))
         self.view.render(scene)
         
-    def _update_message(self, message: str) -> None:
-        self.message_label.config(text=message)
+    def _update_message(self, result: OperationResult) -> None:
+        self.message_label.config(text=result.message)
+
+        if result.ok:
+            self.message_label.config(fg="black")
+        else:
+            self.message_label.config(fg="red")
