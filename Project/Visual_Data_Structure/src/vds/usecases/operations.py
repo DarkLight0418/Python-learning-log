@@ -55,6 +55,10 @@ class OperationResult:
     def ok(self) -> bool:
         return self.status == OperationStatus.SUCCESS
     
+    @property
+    def failed(self) -> bool:
+        return not self.ok
+    
     # 성공하는 경우
     @classmethod
     def success(
